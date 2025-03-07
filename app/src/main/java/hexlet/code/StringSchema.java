@@ -1,14 +1,8 @@
 package hexlet.code;
 
-public class StringSchema {
-    private boolean isRequired = false;
+public class StringSchema extends BaseSchema<StringSchema> {
     private int minLength = 0;
     private String containsSubstring = null;
-
-    public StringSchema required() {
-        this.isRequired = true;
-        return this;
-    }
 
     public StringSchema minLength(int length) {
         this.minLength = length;
@@ -20,17 +14,25 @@ public class StringSchema {
         return this;
     }
 
-    public boolean isValid(String value) {
+    @Override
+    public boolean isValid(Object value) {
+        if (!super.isValid(value)) {
+            return false;
+        }
         if (value == null) {
-            return !isRequired;
+            return !isRequired; // Если значение null, оно валидно только если isRequired == false
         }
-        if (isRequired && value.isEmpty()) {
+        if (!(value instanceof String)) {
             return false;
         }
-        if (value.length() < minLength) {
+        String str = (String) value;
+        if (isRequired && str.isEmpty()) {
+            return false; // Пустая строка не валидна, если isRequired == true
+        }
+        if (str.length() < minLength) {
             return false;
         }
-        if (containsSubstring != null && !value.contains(containsSubstring)) {
+        if (containsSubstring != null && !str.contains(containsSubstring)) {
             return false;
         }
         return true;
