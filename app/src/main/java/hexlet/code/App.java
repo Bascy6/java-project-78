@@ -1,29 +1,32 @@
 package hexlet.code;
 
-import hexlet.code.schemas.StringSchema;
+import hexlet.code.schemas.BaseSchema;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
         Validator v = new Validator();
-        StringSchema schema = v.string();
 
-        System.out.println(schema.isValid("")); // true
-        System.out.println(schema.isValid(null)); // true
+        MapSchema schema = v.map();
 
-        schema.required();
+        Map<String, BaseSchema<?>> schemas = new HashMap<>();
+        schemas.put("name", v.string().required());
+        schemas.put("age", v.number().positive());
 
-        System.out.println(schema.isValid(null)); // false
-        System.out.println(schema.isValid("")); // false
-        System.out.println(schema.isValid("what does the fox say")); // true
-        System.out.println(schema.isValid("hexlet")); // true
+        schema.shape(schemas);
 
-        schema.contains("wh").isValid("what does the fox say"); // true
-        schema.contains("what").isValid("what does the fox say"); // true
-        schema.contains("whatthe").isValid("what does the fox say"); // false
+        Map<String, Object> human1 = new HashMap<>();
+        human1.put("name", "Alice");
+        human1.put("age", 25);
 
-        System.out.println(schema.isValid("what does the fox say")); // false
+        System.out.println(schema.isValid(human1));
 
-        StringSchema schema1 = v.string();
-        System.out.println(schema1.minLength(10).minLength(4).isValid("Hexlet")); // true
+        Map<String, Object> human2 = new HashMap<>();
+        human2.put("name", "Bob");
+        human2.put("age", -5);
+
+        System.out.println(schema.isValid(human2));
     }
 }
