@@ -20,14 +20,14 @@ public class StringSchema extends BaseSchema<StringSchema> {
             return false;
         }
         if (value == null) {
-            return !isRequired; // Если значение null, оно валидно только если isRequired == false
+            return !isRequired;
         }
         if (!(value instanceof String)) {
             return false;
         }
         String str = (String) value;
         if (isRequired && str.isEmpty()) {
-            return false; // Пустая строка не валидна, если isRequired == true
+            return false;
         }
         if (str.length() < minLength) {
             return false;
