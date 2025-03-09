@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.schemas.BaseSchema;
+
 import java.util.Map;
 
 public class MapSchema extends BaseSchema<MapSchema> {
