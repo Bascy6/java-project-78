@@ -7,6 +7,21 @@ public class MapSchema extends BaseSchema<MapSchema> {
     private Map<String, BaseSchema<?>> schemas;
 
     @Override
+    public MapSchema required() {
+        return super.required();
+    }
+
+    public MapSchema sizeof(int size) {
+        this.requiredSize = size;
+        return this;
+    }
+
+    public MapSchema shape(Map<String, BaseSchema<?>> shapeSchemas) {
+        this.schemas = shapeSchemas;
+        return this;
+    }
+
+    @Override
     public boolean isValid(Object value) {
         if (isRequired && value == null) {
             return false;
@@ -24,22 +39,12 @@ public class MapSchema extends BaseSchema<MapSchema> {
         if (schemas != null) {
             for (Map.Entry<String, BaseSchema<?>> entry : schemas.entrySet()) {
                 String key = entry.getKey();
-                BaseSchema<String> schema = (BaseSchema<String>) entry.getValue();
+                BaseSchema<?> schema = entry.getValue();
                 if (!map.containsKey(key) || !schema.isValid(map.get(key))) {
                     return false;
                 }
             }
         }
         return true;
-    }
-
-    public MapSchema sizeof(int size) {
-        this.requiredSize = size;
-        return this;
-    }
-
-    public MapSchema shape(Map<String, BaseSchema<?>> shapeSchemas) {
-        this.schemas = shapeSchemas;
-        return this;
     }
 }

@@ -5,6 +5,11 @@ public class NumberSchema extends BaseSchema<NumberSchema> {
     private int minRange = Integer.MIN_VALUE;
     private int maxRange = Integer.MAX_VALUE;
 
+    @Override
+    public NumberSchema required() {
+        return super.required();
+    }
+
     public NumberSchema positive() {
         this.isPositive = true;
         return this;
