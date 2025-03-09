@@ -8,7 +8,7 @@ public class MapSchema extends BaseSchema<MapSchema> {
 
     @Override
     public boolean isValid(Object value) {
-        if (!checkRequired(value)) {
+        if (isRequired && value == null) {
             return false;
         }
         if (value == null) {
@@ -24,7 +24,7 @@ public class MapSchema extends BaseSchema<MapSchema> {
         if (schemas != null) {
             for (Map.Entry<String, BaseSchema<?>> entry : schemas.entrySet()) {
                 String key = entry.getKey();
-                BaseSchema<?> schema = entry.getValue();
+                BaseSchema<String> schema = (BaseSchema<String>) entry.getValue();
                 if (!map.containsKey(key) || !schema.isValid(map.get(key))) {
                     return false;
                 }

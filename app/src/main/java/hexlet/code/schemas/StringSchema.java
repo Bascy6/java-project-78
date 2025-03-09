@@ -16,7 +16,7 @@ public class StringSchema extends BaseSchema<StringSchema> {
 
     @Override
     public boolean isValid(Object value) {
-        if (!checkRequired(value)) {
+        if (isRequired && value == null) {
             return false;
         }
         if (value == null) {
