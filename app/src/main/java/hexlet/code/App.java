@@ -15,7 +15,7 @@ public class App {
         System.out.println(schema.isValid(null)); // false
         System.out.println(schema.isValid("")); // false
         System.out.println(schema.isValid("what does the fox say")); // true
-        System.out.println(schema.isValid("hexlet")); // true
+        System.out.println(schema.isValid("hexlet1")); // true
 
         schema.contains("wh").isValid("what does the fox say"); // true
         schema.contains("what").isValid("what does the fox say"); // true
