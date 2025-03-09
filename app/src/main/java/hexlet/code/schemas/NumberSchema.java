@@ -18,7 +18,7 @@ public class NumberSchema extends BaseSchema<NumberSchema> {
 
     @Override
     public boolean isValid(Object value) {
-        if (!super.isValid(value)) {
+        if (!checkRequired(value)) {
             return false;
         }
         if (value == null) {

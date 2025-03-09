@@ -8,11 +8,11 @@ public class MapSchema extends BaseSchema<MapSchema> {
 
     @Override
     public boolean isValid(Object value) {
-        if (!super.isValid(value)) {
+        if (!checkRequired(value)) {
             return false;
         }
         if (value == null) {
-            return !isRequired;
+            return true;
         }
         if (!(value instanceof Map)) {
             return false;

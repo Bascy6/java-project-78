@@ -1,7 +1,7 @@
 package hexlet.code;
 
-import hexlet.code.schemas.BaseSchema;
 import hexlet.code.schemas.MapSchema;
+import hexlet.code.schemas.BaseSchema;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +22,12 @@ public class App {
         human1.put("name", "Alice");
         human1.put("age", 25);
 
-        System.out.println(schema.isValid(human1));
+        System.out.println(schema.isValid(human1)); // true
 
         Map<String, Object> human2 = new HashMap<>();
         human2.put("name", "Bob");
         human2.put("age", -5);
 
-        System.out.println(schema.isValid(human2));
+        System.out.println(schema.isValid(human2)); // false
     }
 }
