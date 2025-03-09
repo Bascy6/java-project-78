@@ -19,7 +19,7 @@ public class App {
         schema.shape(schemas);
 
         Map<String, Object> human1 = new HashMap<>();
-        human1.put("name", "Alice");
+        human1.put("name", "Alice ");
         human1.put("age", 25);
 
         System.out.println(schema.isValid(human1)); // true
