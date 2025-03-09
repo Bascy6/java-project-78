@@ -3,9 +3,10 @@ package hexlet.code.schemas;
 public abstract class BaseSchema<T> {
     protected boolean isRequired = false;
 
-    public BaseSchema<T> required() {
+    @SuppressWarnings("unchecked")
+    public T required() {
         this.isRequired = true;
-        return this;
+        return (T) this;
     }
 
     public abstract boolean isValid(Object value);
