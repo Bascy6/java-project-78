@@ -28,9 +28,11 @@ public class MapSchema extends BaseSchema<Map<String, ?>, MapSchema> {
             return false;
         }
         Map<?, ?> map = (Map<?, ?>) value;
+
         if (requiredSize != -1 && map.size() != requiredSize) {
             return false;
         }
+
         if (schemas != null) {
             for (Map.Entry<String, BaseSchema<?, ?>> entry : schemas.entrySet()) {
                 String key = entry.getKey();
@@ -40,6 +42,7 @@ public class MapSchema extends BaseSchema<Map<String, ?>, MapSchema> {
                 }
             }
         }
+
         return true;
     }
 }

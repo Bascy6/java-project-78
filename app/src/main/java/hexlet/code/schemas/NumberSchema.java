@@ -18,12 +18,15 @@ public class NumberSchema extends BaseSchema<Number, NumberSchema> {
 
     @Override
     public boolean isValid(Object value) {
+
         if (isRequired && value == null) {
             return false;
         }
+
         if (value == null) {
             return true;
         }
+
         if (!(value instanceof Integer)) {
             return false;
         }

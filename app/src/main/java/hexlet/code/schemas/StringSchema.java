@@ -16,12 +16,15 @@ public class StringSchema extends BaseSchema<String, StringSchema> {
 
     @Override
     public boolean isValid(Object value) {
+
         if (isRequired && value == null) {
             return false;
         }
+
         if (value == null) {
             return true;
         }
+
         if (!(value instanceof String)) {
             return false;
         }
