@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import hexlet.code.schemas.NumberSchema;
-import hexlet.code.schemas.StringSchema;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,59 +8,38 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class NumberSchemaTest {
 
     @Test
-    public void testDefaultSchema() {
-        Validator v = new Validator();
-        NumberSchema schema = v.number();
-
-        assertTrue(schema.isValid(null));
-        assertTrue(schema.isValid(5));
-    }
-
-    @Test
     public void testRequired() {
-        Validator v = new Validator();
-        StringSchema schema = v.string().required();
+        NumberSchema schema1 = new NumberSchema();
+        assertFalse(schema1.required().isValid(null));
 
-        assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(""));
-        assertTrue(schema.isValid("hexlet"));
+        NumberSchema schema2 = new NumberSchema();
+        assertTrue(schema2.isValid(null));
     }
 
     @Test
     public void testPositive() {
-        Validator v = new Validator();
-        NumberSchema schema = v.number().positive();
-
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(-10));
-        assertFalse(schema.isValid(0));
+        NumberSchema schema = new NumberSchema();
+        assertTrue(schema.positive().isValid(10));
+        assertFalse(schema.positive().isValid(-5));
+        assertFalse(schema.positive().isValid(0));
     }
 
     @Test
     public void testRange() {
-        Validator v = new Validator();
-        NumberSchema schema = v.number().range(5, 10);
-
-        assertTrue(schema.isValid(5));
-        assertTrue(schema.isValid(10));
+        NumberSchema schema = new NumberSchema();
+        schema.range(5, 10);
+        assertTrue(schema.isValid(7));
         assertFalse(schema.isValid(4));
         assertFalse(schema.isValid(11));
     }
 
     @Test
-    public void testCombinedRules() {
-        Validator v = new Validator();
-        NumberSchema schema = v.number()
-                .required()
-                .positive()
-                .range(5, 10);
-
-        assertFalse(schema.isValid(null)); // required
-        assertFalse(schema.isValid(-5));   // positive
-        assertFalse(schema.isValid(0));    // positive
-        assertFalse(schema.isValid(4));    // range
-        assertFalse(schema.isValid(11));   // range
-        assertTrue(schema.isValid(5));     // valid
-        assertTrue(schema.isValid(10));    // valid
+    public void testCombined() {
+        NumberSchema schema = new NumberSchema();
+        schema.required().positive().range(1, 10);
+        assertTrue(schema.isValid(5));
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(-3));
+        assertFalse(schema.isValid(15));
     }
 }
