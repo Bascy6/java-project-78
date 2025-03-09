@@ -2,13 +2,14 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public class MapSchema extends BaseSchema<MapSchema> {
+public class MapSchema extends BaseSchema<Map<String, ?>> {
     private int requiredSize = -1;
     private Map<String, BaseSchema<?>> schemas;
 
     @Override
     public MapSchema required() {
-        return super.required();
+        super.required();
+        return this;
     }
 
     public MapSchema sizeof(int size) {

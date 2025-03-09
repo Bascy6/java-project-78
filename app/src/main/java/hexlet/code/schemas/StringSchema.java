@@ -1,12 +1,13 @@
 package hexlet.code.schemas;
 
-public class StringSchema extends BaseSchema<StringSchema> {
+public class StringSchema extends BaseSchema<String> {
     private int minLength = 0;
     private String containsSubstring = null;
 
     @Override
     public StringSchema required() {
-        return super.required();
+        super.required();
+        return this;
     }
 
     public StringSchema minLength(int length) {

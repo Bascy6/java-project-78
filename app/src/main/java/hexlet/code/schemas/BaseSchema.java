@@ -1,12 +1,11 @@
 package hexlet.code.schemas;
 
-public abstract class BaseSchema<T extends BaseSchema<T>> {
+public abstract class BaseSchema<T> {
     protected boolean isRequired = false;
 
-    @SuppressWarnings("unchecked")
-    public T required() {
+    public BaseSchema<T> required() {
         this.isRequired = true;
-        return (T) this;
+        return this;
     }
 
     public abstract boolean isValid(Object value);

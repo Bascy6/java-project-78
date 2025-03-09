@@ -1,13 +1,14 @@
 package hexlet.code.schemas;
 
-public class NumberSchema extends BaseSchema<NumberSchema> {
+public class NumberSchema extends BaseSchema<Number> {
     private boolean isPositive = false;
     private int minRange = Integer.MIN_VALUE;
     private int maxRange = Integer.MAX_VALUE;
 
     @Override
     public NumberSchema required() {
-        return super.required();
+        super.required();
+        return this;
     }
 
     public NumberSchema positive() {
