@@ -1,45 +1,69 @@
 package hexlet.code;
 
 import hexlet.code.schemas.NumberSchema;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberSchemaTest {
+    private Validator validator;
+    private NumberSchema schema;
 
-    @Test
-    public void testRequired() {
-        NumberSchema schema1 = new NumberSchema();
-        assertFalse(schema1.required().isValid(null));
-
-        NumberSchema schema2 = new NumberSchema();
-        assertTrue(schema2.isValid(null));
+    @BeforeEach
+    void setUp() {
+        validator = new Validator();
+        schema = validator.number();
     }
 
     @Test
-    public void testPositive() {
-        NumberSchema schema = new NumberSchema();
-        assertTrue(schema.positive().isValid(10));
-        assertFalse(schema.positive().isValid(-5));
-        assertFalse(schema.positive().isValid(0));
+    void testEmptySchema() {
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(null));
     }
 
     @Test
-    public void testRange() {
-        NumberSchema schema = new NumberSchema();
+    void testRequired() {
+        schema.required();
+        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(10));
+    }
+
+    @Test
+    void testPositive() {
+        schema.positive();
+        assertTrue(schema.isValid(null));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
+    }
+
+    @Test
+    void testRange() {
         schema.range(5, 10);
-        assertTrue(schema.isValid(7));
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(4));
         assertFalse(schema.isValid(11));
     }
 
     @Test
-    public void testCombined() {
-        NumberSchema schema = new NumberSchema();
-        schema.required().positive().range(1, 10);
-        assertTrue(schema.isValid(5));
+    void testMultipleConstraints() {
+        schema.required().positive().range(5, 10);
         assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(-3));
-        assertFalse(schema.isValid(15));
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
+        assertFalse(schema.isValid(4));
+        assertFalse(schema.isValid(11));
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+    }
+
+    @Test
+    void testOverridingConstraints() {
+        schema.range(5, 10).range(1, 3);
+        assertTrue(schema.isValid(2));
+        assertFalse(schema.isValid(5));
     }
 }
