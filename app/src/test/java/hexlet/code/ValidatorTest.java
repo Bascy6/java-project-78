@@ -54,7 +54,13 @@ public class ValidatorTest {
     @Test
     void testMultipleConstraints() {
         stringSchema.required().minLength(5).contains("hex");
+        assertFalse(stringSchema.isValid(null));
+        assertFalse(stringSchema.isValid(""));
+        assertFalse(stringSchema.isValid("test"));
         assertTrue(stringSchema.isValid("hexagon"));
+        assertTrue(stringSchema.isValid("hexlet"));
+        assertFalse(stringSchema.isValid("hex"));
+        assertTrue(stringSchema.isValid("hexagonhex"));
     }
 
     @Test
@@ -75,9 +81,24 @@ public class ValidatorTest {
         person1.put("lastName", "Petrov");
         assertTrue(mapSchema.isValid(person1));
 
+        Map<String, String> person2 = new HashMap<>();
+        person2.put("firstName", "Yan");
+        person2.put("lastName", "Ivanov");
+        assertFalse(mapSchema.isValid(person2));
+
+        Map<String, String> person3 = new HashMap<>();
+        person3.put("firstName", "Ya");
+        person3.put("lastName", "Petrov");
+        assertFalse(mapSchema.isValid(person3));
+
+        Map<String, String> person4 = new HashMap<>();
+        person4.put("firstName", "yana");
+        person4.put("lastName", "Petro");
+        assertFalse(mapSchema.isValid(person4));
+
         Map<String, String> person5 = new HashMap<>();
-        person5.put("firstName", "yana");
+        person5.put("firstName", "Yan");
         person5.put("lastName", "Petrov");
-        assertTrue(mapSchema.isValid(person5));
+        assertFalse(mapSchema.isValid(person5));
     }
 }
