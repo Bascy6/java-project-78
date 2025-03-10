@@ -34,38 +34,30 @@ public class MapSchema extends BaseSchema<MapSchema> {
         if (value == null) {
             return !isRequired;
         }
-
         if (!(value instanceof Map)) {
             return false;
         }
-
         Map<?, ?> map = (Map<?, ?>) value;
-
         if (isRequired && map.isEmpty()) {
             return false;
         }
-
         if (mapSize != null && map.size() != mapSize) {
             return false;
         }
-
         for (Map.Entry<String, BaseSchema<?>> entry : shapeSchemas.entrySet()) {
             String key = entry.getKey();
             BaseSchema<?> schema = entry.getValue();
-
             if (!map.containsKey(key)) {
                 if (schema instanceof RequiredSchema) {
                     return false;
                 }
                 continue;
             }
-
             Object val = map.get(key);
             if (!schema.isValid(val)) {
                 return false;
             }
         }
-
         return true;
     }
 

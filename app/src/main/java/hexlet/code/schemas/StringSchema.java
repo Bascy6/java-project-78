@@ -31,25 +31,19 @@ public class StringSchema extends BaseSchema<StringSchema> {
         if (value == null) {
             return !isRequired;
         }
-
         if (!(value instanceof String)) {
             return false;
         }
-
         String strValue = (String) value;
-
         if (isRequired && strValue.isEmpty()) {
             return false;
         }
-
         if (strValue.length() < minLength) {
             return false;
         }
-
         if (contains != null && !strValue.contains(contains)) {
             return false;
         }
-
         return true;
     }
 }
