@@ -24,8 +24,8 @@ public class MapSchema extends BaseSchema<MapSchema> {
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<?>> schemas) {
-        this.shapeSchemas = schemas;
+    public MapSchema shape(Map<String, ? extends BaseSchema<?>> schemas) {
+        this.shapeSchemas = new HashMap<>(schemas);
         return this;
     }
 
