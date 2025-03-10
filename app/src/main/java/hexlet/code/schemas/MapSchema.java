@@ -16,7 +16,12 @@ public class MapSchema extends BaseSchema<MapSchema> {
     @Override
     public MapSchema required() {
         this.isRequired = true;
-        return this;
+        return super.required();
+    }
+
+    @Override
+    public boolean isRequired() {
+        return isRequired;
     }
 
     public MapSchema sizeof(int size) {
@@ -38,38 +43,30 @@ public class MapSchema extends BaseSchema<MapSchema> {
             return false;
         }
         Map<?, ?> map = (Map<?, ?>) value;
+
         if (isRequired && map.isEmpty()) {
             return false;
         }
         if (mapSize != null && map.size() != mapSize) {
             return false;
         }
+
         for (Map.Entry<String, BaseSchema<?>> entry : shapeSchemas.entrySet()) {
             String key = entry.getKey();
             BaseSchema<?> schema = entry.getValue();
+
             if (!map.containsKey(key)) {
-                if (schema instanceof RequiredSchema) {
+                if (schema.isRequired()) {
                     return false;
                 }
                 continue;
             }
+
             Object val = map.get(key);
             if (!schema.isValid(val)) {
                 return false;
             }
         }
         return true;
-    }
-
-    private static class RequiredSchema extends BaseSchema<RequiredSchema> {
-        @Override
-        protected RequiredSchema getThis() {
-            return this;
-        }
-
-        @Override
-        public boolean isValid(Object value) {
-            return value != null;
-        }
     }
 }

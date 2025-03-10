@@ -11,9 +11,15 @@ public class NumberSchema extends BaseSchema<NumberSchema> {
         return this;
     }
 
+    @Override
     public NumberSchema required() {
         this.isRequired = true;
-        return this;
+        return super.required();
+    }
+
+    @Override
+    public boolean isRequired() {
+        return isRequired;
     }
 
     public NumberSchema positive() {

@@ -13,7 +13,12 @@ public class StringSchema extends BaseSchema<StringSchema> {
     @Override
     public StringSchema required() {
         this.isRequired = true;
-        return this;
+        return super.required();
+    }
+
+    @Override
+    public boolean isRequired() {
+        return isRequired;
     }
 
     public StringSchema minLength(int length) {
