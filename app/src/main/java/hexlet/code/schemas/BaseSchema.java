@@ -1,25 +1,34 @@
 package hexlet.code.schemas;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
-public abstract class BaseSchema<T> {
-    protected boolean required;
-    protected Predicate<Object> validator = value -> true;
+public class BaseSchema<T> {
+    protected Map<String, Predicate<T>> checks = new LinkedHashMap<>();
+    protected final String isRequired = "required";
 
-    public T required() {
-        this.required = true;
-        this.validator = this.validator.and(value -> value != null);
-        return (T) this;
+    protected final void addCheck(String name, Predicate<T> predicate) {
+        checks.put(name, predicate);
     }
 
-    public boolean isValid(Object value) {
-        if (!required && value == null) {
-            return true;
+    public final boolean isValid(T t) {
+        if (checks.containsKey(isRequired)) {
+            if (!checks.get(isRequired).test(t)) {
+                return false;
+            }
+        } else {
+            if (Objects.isNull(t)) {
+                return true;
+            }
         }
-        return validator.test(value);
-    }
-
-    protected void addCondition(Predicate<Object> condition) {
-        this.validator = this.validator.and(condition);
+        for (var check : checks.keySet()) {
+            var predicate = checks.get(check);
+            if (!predicate.test(t)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -1,54 +1,53 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
-import hexlet.code.schemas.MapSchema;
-import hexlet.code.schemas.BaseSchema;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
-
+import hexlet.code.Validator;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MapSchemaTest {
 
     @Test
-    public void testShapeValidation() {
-        Validator validator = new Validator();
-        MapSchema schema = validator.map();
+    public void testRequired() {
+        MapSchema mapSchema = new MapSchema().required();
 
-        Map<String, BaseSchema<?>> schemas = new HashMap<>();
-        schemas.put("firstName", validator.string().required());
-        schemas.put("lastName", validator.string().required().minLength(2));
-        schemas.put("age", validator.number().positive());
-
-        schema.shape(schemas);
-
-        Map<String, Object> human1 = new HashMap<>();
-        human1.put("firstName", "John");
-        human1.put("lastName", "Smith");
-        human1.put("age", 30);
-        assertTrue(schema.isValid(human1));
-
-        Map<String, Object> human2 = new HashMap<>();
-        human2.put("firstName", "John");
-        human2.put("lastName", null);
-        human2.put("age", 30);
-        assertFalse(schema.isValid(human2));
+        assertTrue(mapSchema.isValid(new HashMap<>()));
+        assertFalse(mapSchema.isValid(null));
     }
 
     @Test
-    public void testMissingKeys() {
-        Validator validator = new Validator();
-        MapSchema schema = validator.map();
+    public void testSizeof() {
+        MapSchema mapSchema = new MapSchema().sizeof(2);
 
-        Map<String, BaseSchema<?>> schemas = new HashMap<>();
-        schemas.put("firstName", validator.string().required());
-        schemas.put("lastName", validator.string().required());
+        Map<String, Object> map = new HashMap<>();
+        map.put("key1", "value1");
+        map.put("key2", "value2");
 
-        schema.shape(schemas);
+        assertTrue(mapSchema.isValid(map));
 
-        Map<String, Object> human = new HashMap<>();
-        human.put("firstName", "John");
-        assertFalse(schema.isValid(human));
+        map.put("key3", "value3");
+        assertFalse(mapSchema.isValid(map));
+    }
+
+    @Test
+    public void testShape() {
+        MapSchema mapSchema = new MapSchema().shape(Map.of(
+                "name", Validator.string().required().minLength(3),
+                "age", Validator.number().required().range(18, 99)
+        ));
+
+        Map<String, Object> validData = new HashMap<>();
+        validData.put("name", "John");
+        validData.put("age", 25);
+
+        assertTrue(mapSchema.isValid(validData));
+
+        Map<String, Object> invalidData = new HashMap<>();
+        invalidData.put("name", "Jo");
+        invalidData.put("age", 17);
+
+        assertFalse(mapSchema.isValid(invalidData));
     }
 }

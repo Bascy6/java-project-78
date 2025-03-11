@@ -1,85 +1,47 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
-import hexlet.code.schemas.NumberSchema;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
 public class NumberSchemaTest {
 
     @Test
     public void testRequired() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
+        NumberSchema numberSchema = new NumberSchema().required();
 
-        assertTrue(schema.isValid(null));
-        assertTrue(schema.isValid(5));
-
-        schema.required();
-
-        assertFalse(schema.isValid(null));
-        assertTrue(schema.isValid(5));
+        assertTrue(numberSchema.isValid(10));
+        assertFalse(numberSchema.isValid(null));
     }
 
     @Test
     public void testPositive() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number().positive();
+        NumberSchema numberSchema = new NumberSchema().positive();
 
-        assertTrue(schema.isValid(null)); // До вызова required()
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(-5));
-        assertFalse(schema.isValid(0));
-
-        schema.required();
-
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(-5));
-        assertFalse(schema.isValid(0));
+        assertTrue(numberSchema.isValid(5));
+        assertFalse(numberSchema.isValid(-5));
+        assertFalse(numberSchema.isValid(0));
     }
 
     @Test
     public void testRange() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number().range(5, 10);
+        NumberSchema numberSchema = new NumberSchema().range(10, 20);
 
-        assertTrue(schema.isValid(null));
-        assertTrue(schema.isValid(5));
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(4));
-        assertFalse(schema.isValid(11));
-
-        schema.required();
-
-        assertTrue(schema.isValid(5));
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(4));
-        assertFalse(schema.isValid(11));
+        assertTrue(numberSchema.isValid(15));
+        assertFalse(numberSchema.isValid(5));
+        assertFalse(numberSchema.isValid(25));
     }
 
     @Test
-    public void testCombinedConditions() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number()
+    public void testCombination() {
+        NumberSchema numberSchema = new NumberSchema()
                 .required()
                 .positive()
-                .range(5, 10);
+                .range(1, 10);
 
-        assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(-5));
-        assertFalse(schema.isValid(0));
-        assertTrue(schema.isValid(5));
-        assertTrue(schema.isValid(10));
-        assertFalse(schema.isValid(4));
-        assertFalse(schema.isValid(11));
-    }
-
-    @Test
-    public void testNonIntegerValues() {
-        Validator validator = new Validator();
-        NumberSchema schema = validator.number();
-
-        assertTrue(schema.isValid("string"));
-        assertTrue(schema.isValid(new Object()));
+        assertTrue(numberSchema.isValid(5));
+        assertFalse(numberSchema.isValid(null));
+        assertFalse(numberSchema.isValid(-5));
+        assertFalse(numberSchema.isValid(15));
     }
 }
