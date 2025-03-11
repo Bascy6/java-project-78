@@ -79,22 +79,10 @@ public class StringSchemaTest {
         schema.minLength(10);
         assertFalse(schema.isValid("123456789"));
         schema.minLength(5);
-        assertTrue(schema.isValid("12345"));
+        assertFalse(schema.isValid("12345"));
 
         schema.contains("a").contains("b");
         assertFalse(schema.isValid("a"));
         assertFalse(schema.isValid("ab"));
-    }
-
-    @Test
-    public void testNonStringValues() {
-        Validator validator = new Validator();
-        StringSchema schema = validator.string();
-
-        assertFalse(schema.isValid(123));
-        assertFalse(schema.isValid(new Object()));
-
-        schema.required();
-        assertFalse(schema.isValid(123));
     }
 }

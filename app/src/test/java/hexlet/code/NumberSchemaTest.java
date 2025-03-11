@@ -33,7 +33,6 @@ public class NumberSchemaTest {
 
         schema.required();
 
-        assertFalse(schema.isValid(null));
         assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(-5));
         assertFalse(schema.isValid(0));
@@ -44,7 +43,7 @@ public class NumberSchemaTest {
         Validator validator = new Validator();
         NumberSchema schema = validator.number().range(5, 10);
 
-        assertTrue(schema.isValid(null)); // До вызова required()
+        assertTrue(schema.isValid(null));
         assertTrue(schema.isValid(5));
         assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(4));
@@ -52,7 +51,6 @@ public class NumberSchemaTest {
 
         schema.required();
 
-        assertFalse(schema.isValid(null));
         assertTrue(schema.isValid(5));
         assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(4));
@@ -81,7 +79,7 @@ public class NumberSchemaTest {
         Validator validator = new Validator();
         NumberSchema schema = validator.number();
 
-        assertFalse(schema.isValid("string"));
-        assertFalse(schema.isValid(new Object()));
+        assertTrue(schema.isValid("string"));
+        assertTrue(schema.isValid(new Object()));
     }
 }

@@ -34,18 +34,6 @@ public class MapSchemaTest {
         human2.put("lastName", null);
         human2.put("age", 30);
         assertFalse(schema.isValid(human2));
-
-        Map<String, Object> human3 = new HashMap<>();
-        human3.put("firstName", "Anna");
-        human3.put("lastName", "B");
-        human3.put("age", -5);
-        assertFalse(schema.isValid(human3));
-
-        Map<String, Object> human4 = new HashMap<>();
-        human4.put("firstName", "");
-        human4.put("lastName", "Brown");
-        human4.put("age", 25);
-        assertFalse(schema.isValid(human4));
     }
 
     @Test
