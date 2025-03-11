@@ -16,29 +16,22 @@ public class StringSchema extends BaseSchema<StringSchema> {
 
     @Override
     public boolean isValid(Object value) {
-
         if (value == null) {
-            return false;
+            return !required;
         }
-
         if (!(value instanceof String)) {
             return false;
         }
-
         String strValue = (String) value;
-
         if (required && strValue.isEmpty()) {
             return false;
         }
-
         if (minLength != null && strValue.length() < minLength) {
             return false;
         }
-
         if (contains != null && !strValue.contains(contains)) {
             return false;
         }
-
         return true;
     }
 }

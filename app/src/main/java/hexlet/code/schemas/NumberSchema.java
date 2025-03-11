@@ -18,29 +18,22 @@ public class NumberSchema extends BaseSchema<NumberSchema> {
 
     @Override
     public boolean isValid(Object value) {
-
         if (value == null) {
             return !required;
         }
-
         if (!(value instanceof Integer)) {
             return false;
         }
-
         int numValue = (Integer) value;
-
         if (positive && numValue <= 0) {
             return false;
         }
-
         if (minRange != null && numValue < minRange) {
             return false;
         }
-
         if (maxRange != null && numValue > maxRange) {
             return false;
         }
-
         return true;
     }
 }

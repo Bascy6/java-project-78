@@ -12,7 +12,7 @@ public class StringSchemaTest {
         Validator validator = new Validator();
         StringSchema schema = validator.string();
 
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(null));
         assertTrue(schema.isValid(""));
         assertTrue(schema.isValid("Hello"));
 
@@ -27,7 +27,7 @@ public class StringSchemaTest {
         Validator validator = new Validator();
         StringSchema schema = validator.string().minLength(3);
 
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(null));
         assertFalse(schema.isValid(""));
         assertFalse(schema.isValid("ab"));
         assertTrue(schema.isValid("abc"));
@@ -43,7 +43,7 @@ public class StringSchemaTest {
         Validator validator = new Validator();
         StringSchema schema = validator.string().contains("test");
 
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(null));
         assertFalse(schema.isValid(""));
         assertFalse(schema.isValid("tes"));
         assertTrue(schema.isValid("test"));
