@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.puppycrawl.tools:checkstyle:10.17.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.puppycrawl.tools" artifactId="checkstyle" version="10.17.0" baseVersion="10.17.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.puppycrawl.tools/checkstyle/10.17.0/4d791848afa75cf6237a1baac99e959d5de8648b/checkstyle-10.17.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
