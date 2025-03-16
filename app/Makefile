@@ -18,6 +18,9 @@ run-dist:
 run:
 	./gradlew run
 
+lint:
+	./gradlew lint
+
 test:
 	./gradlew test
 
