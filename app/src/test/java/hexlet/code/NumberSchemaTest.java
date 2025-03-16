@@ -28,6 +28,8 @@ public class NumberSchemaTest {
         NumberSchema numberSchema = new NumberSchema().range(10, 20);
 
         assertTrue(numberSchema.isValid(15));
+        assertTrue(numberSchema.isValid(10));
+        assertTrue(numberSchema.isValid(20));
         assertFalse(numberSchema.isValid(5));
         assertFalse(numberSchema.isValid(25));
     }

@@ -12,7 +12,6 @@ public class StringSchemaTest {
 
         assertTrue(stringSchema.isValid("test"));
         assertFalse(stringSchema.isValid(""));
-        assertFalse(stringSchema.isValid(null));
     }
 
     @Test
@@ -42,5 +41,14 @@ public class StringSchemaTest {
         assertFalse(stringSchema.isValid("this is"));
         assertFalse(stringSchema.isValid("test"));
         assertFalse(stringSchema.isValid(null));
+    }
+
+    @Test
+    public void testWithoutRequired() {
+        StringSchema stringSchema = new StringSchema();
+
+        assertTrue(stringSchema.isValid(null));
+        assertTrue(stringSchema.isValid(""));
+        assertTrue(stringSchema.isValid("test"));
     }
 }

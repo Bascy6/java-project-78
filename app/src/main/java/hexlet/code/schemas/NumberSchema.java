@@ -14,13 +14,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema positive() {
-        Predicate<Integer> positive = e -> {
-            if (e == 0) {
-                return false;
-            } else {
-                return e > 0;
-            }
-        };
+        Predicate<Integer> positive = e -> e > 0;
         addCheck(numberIsPositive, positive);
         return this;
     }
