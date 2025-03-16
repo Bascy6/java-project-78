@@ -1,6 +1,9 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("java")
-    id("checkstyle")
+    checkstyle
     jacoco
 }
 
@@ -12,14 +15,24 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation(platform("org.junit:junit-bom:5.10.3"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+    testImplementation("org.assertj:assertj-core:3.26.3")
+
     implementation("com.puppycrawl.tools:checkstyle:10.17.0")
+}
+
+checkstyle {
+    toolVersion = "10.17.0"
 }
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        showStandardStreams = true
+    }
 }
 
 tasks.jacocoTestReport {
