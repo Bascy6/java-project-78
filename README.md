@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Bascy6/java-project-78/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Bascy6/java-project-78/actions)
-<a href="https://codeclimate.com/github/Bascy6/java-project-78/maintainability"><img src="https://api.codeclimate.com/v1/badges/5656501caa5977d58790/maintainability" /></a>
-<a href="https://codeclimate.com/github/Bascy6/java-project-78/test_coverage"><img src="https://api.codeclimate.com/v1/badges/5656501caa5977d58790/test_coverage" /></a>
+[![Maintainability](https://qlty.sh/badges/a0ca2d56-ea72-423e-90a1-f81cc2236ac9/maintainability.svg)](https://qlty.sh/gh/Bascy6/projects/java-project-78)
+[![Code Coverage](https://qlty.sh/badges/a0ca2d56-ea72-423e-90a1-f81cc2236ac9/test_coverage.svg)](https://qlty.sh/gh/Bascy6/projects/java-project-78)
 
 # Проект: Валидатор данных
